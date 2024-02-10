@@ -1,0 +1,26 @@
+{
+  "name": "cs2-discord-bot-k4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "OnlyGuts",
+  "license": "GPL-3.0-or-later",
+  "description": "",
+  "dependencies": {
+    "@discordjs/rest": "^2.2.0",
+    "discord-api-types": "^0.37.69",
+    "discord.js": "^14.14.1",
+    "gamedig": "^5.0.0-beta.2",
+    "mysql2": "^3.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onlyguts/CS2-Discord-Bot-K4.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onlyguts/CS2-Discord-Bot-K4/issues"
+  },
+  "homepage": "https://github.com/onlyguts/CS2-Discord-Bot-K4#readme"
+}
