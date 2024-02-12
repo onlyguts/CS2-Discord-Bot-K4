@@ -23,7 +23,7 @@ module.exports = {
         const connection = await mysql.createConnection(config.dbConfig);
 
      
-      const statsQuery = 'SELECT name as namesteam, kills, assists, deaths, headshots, steam_id FROM k4stats WHERE steam_id = ?';
+      const statsQuery = 'SELECT * FROM k4stats WHERE steam_id = ?';
       const [statsRows] = await connection.execute(statsQuery, [steamId]);
 
       if (statsRows.length === 0) {
@@ -34,22 +34,25 @@ module.exports = {
 
       const playerStats = statsRows[0];
 
-      function formatName(name) {
-        if (name.length > 10) {
-            return name.substring(0, 10);
-        } else {
-            return name;
-        }
-      }
-      let description = `👤 **Name:** ${formatName(playerStats.namesteam)}\n` +
-                        `💀 **Kills / Assists / Death :** ${playerStats.kills} | ${playerStats.assists} | ${playerStats.deaths}\n` +
-                        `🔥 **K/D Ratio:** ${(playerStats.kills / playerStats.deaths).toFixed(2)}\n` +
-                        `🤯 **Headshots:** ${playerStats.headshots}\n` +
-                        `🎯 **HS %:** ${(playerStats.headshots / playerStats.kills * 100).toFixed(2)}%\n`;
 
       const embed = new EmbedBuilder()
-        .setTitle('📊 **Player Statistics** 📊')
-        .setDescription(description)
+        .setTitle(`**${playerStats.name} Statistics**`)
+        .setDescription(`👤 **Steam ID** ${playerStats.steam_id}`)
+        .addFields(
+          { name: '💀 **Total Kills**', value: `${playerStats.kills}`, inline: true },
+          { name: '☠️ **Total Deaths**', value: `${playerStats.deaths}`, inline: true },
+          { name: '🤝 **Assists**', value: `${playerStats.assists}`, inline: true },
+          { name: '🔥 **K/D Ratio**', value: `${(playerStats.kills / playerStats.deaths).toFixed(2)}`, inline: true },
+          { name: '🎯 **Headshots**', value: `${playerStats.headshots}`, inline: true },
+          { name: '🎯 **Headshots %**', value: `${(playerStats.headshots / playerStats.kills * 100).toFixed(2)}%`, inline: true },
+          { name: '🔫 **Accuracy %**', value: `${(playerStats.hits_given / playerStats.shoots * 100).toFixed(2)}%`, inline: true },
+          { name: '⚔️ **Total Shoots**', value: `${playerStats.shoots}`, inline: true },
+          { name: '🔪 **Hits Given**', value: `${playerStats.hits_given}`, inline: true },
+          { name: '🛡️ **Hits Taken**', value: `${playerStats.hits_taken}`, inline: true },
+          { name: '🏆 **Round Win / Lose**', value: `${playerStats.round_win} / ${playerStats.round_lose}`, inline: true },
+          { name: '⚖️ **W/L Ratio**', value: `${(playerStats.round_win / (playerStats.round_win + playerStats.round_lose) * 100).toFixed(2)}%`, inline: true },
+      )
+  
         .setColor('#0099ff')
         .setTimestamp();
 
