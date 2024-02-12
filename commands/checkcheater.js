@@ -7,7 +7,6 @@ module.exports = {
         .setName('checkcheater')
         .setDescription('[ADMIN] Detects suspicious players based on advanced game statistics.')
         .addStringOption(option => option.setName('steam_id').setDescription('Steam ID of the player to check.').setRequired(false)),
-        
     async execute(interaction) {
         if (!interaction.member.roles.cache.some(role => role.id === config.requiredRoleId)) {
             await interaction.reply({ content: "⛔ You do not have permission to use this command.", ephemeral: true });
